@@ -1,0 +1,32 @@
+TASK:
+Вам дана база данных ноутбуков, которая содержит две таблицы. Таблица notebooks\_brand содержит данные о наименовании брендов ноутбуков. Таблица notebooks\_notebook содержит данные о наименовании ноутбука, его диагонали, ширине, глубине и высоте, а также имеет ссылку на бренд, к которому относится данная модель.
+
+Задание:
+1. Напишите запрос, который подсчитает какое количество ноутбуков представлено в каждом бренде. Отсортируйте данные по убыванию.
+2. Вам необходимо выделить группы ноутбуков по размерам. Для этого размеры предварительно нужно округлить в большую сторону до ближайшего 0 или 5 и затем сгруппировать по одинаковым размерам, подсчитав количество ноутбуков в каждой группе. Отсортируйте данные по размерам.
+
+СУБД: PostgreSQL
+
+#1
+
+SELECT COUNT(notebooks_notebook.id), notebooks_brand.title FROM notebooks_notebook
+LEFT JOIN notebooks_brand ON notebooks_notebook.brand_id=notebooks_brand.id
+GROUP BY notebooks_brand.title ORDER BY COUNT(notebooks_notebook.id) DESC
+
+#2
+
+SELECT
+COUNT(id),
+CEILING(notebooks_notebook.width/5)*5 AS n_width,
+CEILING(notebooks_notebook.depth/5)*5 AS n_depth,
+CEILING(notebooks_notebook.height/5)*5 AS n_height,
+CEILING(notebooks_notebook.diagonal/5)*5 AS n_diagonal
+FROM notebooks_notebook GROUP BY  n_width,
+								  n_depth,
+								  n_height,
+								  n_diagonal
+						ORDER BY
+								  n_width,
+								  n_depth,
+								  n_height,
+								  n_diagonal
