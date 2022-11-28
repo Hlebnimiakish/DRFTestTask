@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.authtoken import views
 
-from .views import GlobalTransactionsCRUDAPIView, CreateUserAPIView, UserCategoriesAPIView, UserTransactionsAPIView, UserBalance
+from .views import GlobalTransactionsCRUDAPIView, CreateUserAPIView, UserCategoriesAPIView, UserTransactionsAPIView, UserBalanceAPIView
 
 urlpatterns = [
     path('transactions/', GlobalTransactionsCRUDAPIView.as_view({'get': 'list'})),
@@ -16,7 +16,7 @@ urlpatterns = [
     path('user_category/<int:id>/', UserCategoriesAPIView.as_view({'get': 'retrive'})),
     path('user_category/add/', UserCategoriesAPIView.as_view({'post': 'create'})),
     path('user_category/<int:id>/change/', UserCategoriesAPIView.as_view({'get': 'retrive', 'put': 'update'})),
-    path('user_category/<int:id>/delete/', UserCategoriesAPIView.as_view({'delete': 'destroy'})),
-    path('user_balance', UserBalance.as_view()),
+    path('user_category/<int:id>/delete/', UserCategoriesAPIView.as_view({'get': 'retrive', 'delete': 'destroy'})),
+    path('user_balance', UserBalanceAPIView.as_view()),
 
 ]

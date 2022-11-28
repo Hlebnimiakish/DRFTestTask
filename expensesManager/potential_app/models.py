@@ -22,6 +22,12 @@ class UserTransactions(models.Model):
         return self.tr_description
 
 
+class UserBalance(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    balance_value = models.FloatField(blank=False, null=False, default=0.0)
+
+
+
 
 
 
